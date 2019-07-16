@@ -78,8 +78,7 @@ def script_scrapper(urlss):
 
 
 
-def php_code_replacor(urlss):
-    
+def php_code_replacor(urlss):    
     # Below are the PHP code replacor
     home_replace = re.sub(r'"/"', '<?php echo home_url(); ?>', html_pages(urlss))
 
