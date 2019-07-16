@@ -60,23 +60,21 @@ def script_scrapper(urlss):
         if(re.search(r'ajax', str(i))):
             links.append(f'{i.get("src")}')
         else:
-            # links.append(f'{home_url}/{i.get("src")}')
-            links.append(f'{i.get("src")}')
+            links.append(f'{home_url}/{i.get("src")}')
 
 
-    print(links)
 
 
-    # for link in links:
-    #     # link_gen = re.sub(r'https://', '/', link)
-    #     script_content = requests.get(link).text
+    for link in links:
+        # link_gen = re.sub(r'https://', '/', link)
+        script_content = requests.get(link).text
 
-    #     # getting the scripts title from the last url's slug
-    #     script_name = link.split('/')[-1]
+        # getting the scripts title from the last url's slug
+        script_name = link.split('/')[-1]
 
-    #     # writing the script to the file in script folder
-    #     with open(os.path.join(path_script, f'{script_name}'), 'w', encoding="utf-8") as ft:
-    #         ft.write(script_content)
+        # writing the script to the file in script folder
+        with open(os.path.join(path_script, f'{script_name}'), 'w', encoding="utf-8") as ft:
+            ft.write(script_content)
 
 
 
