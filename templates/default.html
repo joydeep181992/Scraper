@@ -1,0 +1,33 @@
+<?php /* Template Name: Default */ ?>
+<!DOCTYPE html>
+<html lang="en" class="no-js" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<link rel="dns-prefetch" href="//ajax.googleapis.com" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no"/>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/style.css" type="text/css" media="all" />	
+	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/ninja.css" type="text/css" media="all" />	
+	<link rel="apple-touch-icon" href="<?php bloginfo('template_url'); ?>/images/apple-touch-icon.png"/>
+	<?php 
+	    /* Always have wp_head() just before the closing </head>
+	     * tag of your theme, or you will break many plugins, which
+	     * generally use this hook to add elements to <head> such
+	     * as styles, scripts, and meta tags.
+	     */
+	    wp_head();
+	 ?>
+	<style>
+		html {
+		    margin-top: 0 !important;
+		}	
+	</style>
+</head>
+
+{{ data }}
+
+</html>
