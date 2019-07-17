@@ -59,15 +59,11 @@ def script_scrapper(urlss):
     for i in script_list:
         if(re.search(r'ajax', str(i))):
             links.append(f'{i.get("src")}')
-        elif re.search(r'assets', str(i)):
+        elif re.search(r'assets', str(i)) or re.search(r'index', str(i)) or re.search(r'autofillFSP', str(i)) or re.search(r'combined-intake', str(i)) or re.search(r'searchFormDesignCheck', str(i)):
             pass
         else:
             links.append(f'{home_url}/{i.get("src")}')
 
-
-    print(links)
-
-    # print(links)
 
     for link in links:
         # link_gen = re.sub(r'https://', '/', link)
