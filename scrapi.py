@@ -4,19 +4,31 @@ import re
 import sys
 import os
 
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+import time
 from img_scrapper import *
 
-# creating the folder for to add the script i.e present in the site
-path_script = 'js/'
-path_pages = 'pages/'
 
-# theme_name = ''
+path_script = 'wordpress/js/'
+path_pages = 'wordpress/pages/'
 
-if not os.path.exists(path_script):
-    os.makedirs(path_script)
+# class FolderCreate:
+#     def wordpress(self):
+#         # creating the folder for to add the script i.e present in the site
+#         path_script = 'wordpress/js/'
+#         path_pages = 'wordpress/pages/'
 
-if not os.path.exists(path_pages):
-    os.makedirs(path_pages)
+#         # theme_name = ''
+
+#         if not os.path.exists(path_script):
+#             os.makedirs(path_script)
+
+#         if not os.path.exists(path_pages):
+#             os.makedirs(path_pages)
+
+# ss = FolderCreate()
+# ss.wordpress()
 
 
 # Templating the pages
@@ -28,7 +40,6 @@ env = Environment(
 
 # Getting URL's from the command line arguments
 default_url = str(sys.argv[1])
-
 home_url = str(sys.argv[2])
 
 
@@ -37,24 +48,18 @@ home_url = str(sys.argv[2])
 def html_pages(urlss):
     scrapper_url = urlss
     scrapper_html = requests.get(scrapper_url).text
-
     # The Scrapper default
     soup = BeautifulSoup(scrapper_html, 'lxml')
     body = soup.find('body')
-
     return str(body)
 
 
 # Function to scrap the script files
 def script_scrapper(urlss):
     script = requests.get(urlss).text
-
     scrapper_script = BeautifulSoup(script, 'lxml')
-
     script_list = scrapper_script.find_all('script', attrs={'src': re.compile('.js')})
-
     links = []
-    
 
     for i in script_list:
         if(re.search(r'ajax', str(i))):
@@ -63,7 +68,6 @@ def script_scrapper(urlss):
             pass
         else:
             links.append(f'{home_url}/{i.get("src")}')
-
 
     for link in links:
         # link_gen = re.sub(r'https://', '/', link)
@@ -120,7 +124,7 @@ def php_code_replacor(urlss):
 
     footer = re.sub(r'</footer>', footer_replace, shortform)
 
-    body_replace = '<body class="<?php echo basename(get_permalink()); ?> '
+    body_replace = '<body class="<?php echo basename(get_permalink()); ?>'
     
     body = re.sub(r'<body class="', body_replace, footer)
 
@@ -178,8 +182,6 @@ def main():
     html_img(home_url)
 
     css_img(home_url)
-
-    
 
 if __name__ == "__main__":
     main()
