@@ -6,12 +6,19 @@ import os
 
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+
 import time
 from img_scrapper import *
 
 
 path_script = 'wordpress/js/'
 path_pages = 'wordpress/pages/'
+
+if not os.path.exists(path_script):
+    os.makedirs(path_script)
+
+if not os.path.exists(path_pages):
+    os.makedirs(path_pages)
 
 # class FolderCreate:
 #     def wordpress(self):
@@ -186,3 +193,4 @@ def main():
 if __name__ == "__main__":
     main()
     print("Page has been scrapped successfully!!")
+
