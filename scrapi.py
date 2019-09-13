@@ -90,7 +90,7 @@ def script_scrapper(urlss):
 
 
 def php_code_replacor(urlss):    
-    # Below are the PHP code replacor
+    # Below are the PHP code replacement
     home_replace = re.sub(r'"/"', '<?php echo home_url(); ?>', html_pages(urlss))
 
     default_replace = re.sub(r'href="/', 'href="<?php echo get_site_url(); ?>/', home_replace)
@@ -140,6 +140,7 @@ def php_code_replacor(urlss):
     return uns_code
 
 
+# scraping function for style
 def style_scrap(urlss):
     css_url = f'{urlss}/design/css/site.css'
     css_style = requests.get(css_url).text
@@ -148,6 +149,7 @@ def style_scrap(urlss):
     bg_replace = re.sub(r'url\(\.\./', 'url(', font_replace)
     return bg_replace
 
+# tittle generator
 def theme_gettor(urlss):
     scrapper_html = requests.get(urlss).text
 
@@ -157,15 +159,29 @@ def theme_gettor(urlss):
 
     return theme_name.decode_contents()
 
+def font_awesome(urlss):
+    scrapper_html = requests.get(urlss).text
+    soup = BeautifulSoup(scrapper_html, 'lxml')
+    styles_link = soup.findAll(attrs={'rel': 'stylesheet', 'href' : re.compile('https://fonts.googleapis.com/css*')})
+    return styles_link[0]
+
+
 def main():
     # Creating template for the pages
     # Default Page
+
+    # Data i.e. needed for templates
+    data_passed = [
+            php_code_replacor(default_url), font_awesome(default_url)
+        ]
+
+    # Default page
     template_default = env.get_template('default.html')
-    output_default = template_default.render(data = php_code_replacor(default_url))
+    output_default = template_default.render(data = data_passed)
 
     # Index Page
     template_index = env.get_template('index.html')
-    output_index = template_index.render(data = php_code_replacor(home_url))
+    output_index = template_index.render(data = data_passed)
 
     # CSS Styles
     css_data = [theme_gettor(home_url), style_scrap(home_url)]
@@ -174,7 +190,7 @@ def main():
     output_css = template_css.render(data = css_data)
 
 
-    # File Write
+    # Writing to the file
     with open(os.path.join(path_pages, 'default.php'), 'w', encoding="utf-8") as fp:
         fp.write(output_default)
 
