@@ -171,17 +171,15 @@ def main():
     # Default Page
 
     # Data i.e. needed for templates
-    data_passed = [
-            php_code_replacor(default_url), font_awesome(default_url)
-        ]
+    data_passed = [php_code_replacor(default_url), font_awesome(default_url)]
 
     # Default page
     template_default = env.get_template('default.html')
-    output_default = template_default.render(data = data_passed)
+    output_default = template_default.render(data_passed = data_passed)
 
     # Index Page
     template_index = env.get_template('index.html')
-    output_index = template_index.render(data = data_passed)
+    output_index = template_index.render(data_passed = data_passed)
 
     # CSS Styles
     css_data = [theme_gettor(home_url), style_scrap(home_url)]
